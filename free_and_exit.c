@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/15 14:39:20 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/15 17:07:20 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	ft_free_map_and_error(t_map *map, char *error)
 	free(map->points);
 	free(map->start);
 	free(map->end);
-	mlx_terminate(map->mlx);
 	free(map);
 	perror(error);
 	exit(1);
@@ -71,7 +70,7 @@ void	ft_free_map(t_map *map)
 	free(map);
 }
 
-void ft_free_double_array(char **array)
+void	ft_free_double_array(char **array)
 {
 	int i;
 
@@ -84,7 +83,7 @@ void ft_free_double_array(char **array)
 	free(array);
 }
 
-void ft_free_double_array_content(char **array)
+void	ft_free_double_array_content(char **array)
 {
 	int i;
 

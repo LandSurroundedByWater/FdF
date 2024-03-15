@@ -17,8 +17,8 @@
 # include "libft/get_next_line.h"
 # include <time.h>
 
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 1920
+# define HEIGHT 1280
 
 # define CLR_DISCO          0x9A1F6AFF
 # define CLR_BRICK_RED      0xC2294EFF
@@ -101,20 +101,21 @@ typedef struct s_map {
 } t_map;
 
 //Map parsing
-void	allocate_map(t_map *map);
-void	init_map(int fd, t_map *map, char **argv);
-void	count_columns_and_rows(int fd, t_map *map, char **argv);
+void	count_columns(int fd, t_map *map, char **argv);
+void	count_rows(int fd, t_map *map, char **argv);
 void	fill_map(int fd, t_map *map, char **argv);
-void	init_points(t_point *p1, t_point orig1, t_point *p2, t_point orig2);
-t_point *init_point(t_point *current, t_point orig);
+
+//t_point *init_point(t_point *current, t_point orig);
 
 //Map drawing
+void	init_points(t_point *p1, t_point orig1, t_point *p2, t_point orig2);
 void	draw(t_map *map, mlx_image_t* image);
 void	draw_map(t_map *map);
 void	set_offset(t_map *map);
 
 //texts drawing
 void my_put_string(t_map *map, int x, int y);
+//void my_put_string(t_map *map, mlx_image_t *tmp_text, int x, int y);
 
 //rotate and center
 t_point correct_point_offset(t_point *point, t_map *map);
@@ -130,9 +131,7 @@ char	**ft_split_fdf(char const *s, char c);
 
 //hooks
 void	my_scrollhook(double xdelta, double ydelta, void *param);
-void	my_ownkeyhook(void *param);
-
-
+void	my_keyhook(void *param);
 
 //free and error
 void	ft_free_double_and_error(char **arr, char *error);

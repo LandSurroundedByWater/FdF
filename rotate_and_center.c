@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 13:18:15 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/11 13:20:18 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/15 17:03:45 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_point rotate_y(t_point point, double angle)
 	z = point.z;
 	point.x = x * cos(angle) + z * sin(angle);
 	point.z = x * -sin(angle) + (z * (cos(angle)));
-
 	return(point);
 }
 
@@ -53,8 +52,6 @@ t_point rotate_z(t_point point, double angle)
 	y = point.y;
 	point.x = x * cos(angle) - y * sin(angle);
 	point.y = x * sin(angle) + y * (cos(angle));
-
-
 	return (point);
 }
 

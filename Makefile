@@ -16,7 +16,6 @@ LIBFT= 	libft/libft.a
 SRCS		= fdf.c \
 			parse_map.c \
 			draw_map.c \
-			ft_free.c \
 			utils1.c \
 			free_and_exit.c \
 			rotate_and_center.c \
