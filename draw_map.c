@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/15 18:16:34 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/16 10:45:54 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,15 @@ int32_t get_col(t_point *start, t_point *end)
 	}
 	else if (end->col_theme == 2)
 	{
-
-		if(end->z < start->z)
+		if (end->z == 0 && start->z == 0)
+			return(COL_LINE2);
+		if (end->z < start->z)
 			return (start->col2);
 		else
 			return (end->col2);
 	}
 	else
-		return (CLR_JAFFA);
+		return (COL_JAFFA);
 }
 
 void swap(int *dx, int *dy)
@@ -186,24 +187,17 @@ void	init_points(t_point *p1, t_point orig1, t_point *p2, t_point orig2)
 
 }
 
-
-
-
 static void	draw_background(mlx_image_t* image, int32_t col)
 {
 	int x;
 	int y;
-	int w;
-
-	w = (int)image->width;
+	
 	x = 0;
-	while(x < w)
+	while(x < (int)image->width)
 	{
 		y = -1;
 		while (++y < HEIGHT)
-		{
 			draw_bg_pixel(image, x, y, col);
-		}
 		x++;
 	}
 }
@@ -241,7 +235,7 @@ void draw_map(t_map *map)
 		ft_free_map_and_error(map, ERR_MLX);
 	if (mlx_image_to_window(map->mlx, newimage, 0, 0) == -1)
 			ft_free_map_and_error(map, ERR_MLX);
-	draw_background(newimage, BG_COLOR);
+	draw_background(newimage, COL_BG);
 	draw_lines(map, newimage);
 	temp = map->image;
 	map->image = newimage;

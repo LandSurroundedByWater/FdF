@@ -7,6 +7,7 @@ SOURCES = \
 	ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c \
 	ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c \
 	ft_putendl_fd.c ft_putnbr_fd.c get_next_line.c
+
 BSOURCES = \
 	ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c \
 	ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
@@ -19,10 +20,11 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 %.o: %.c
-	$(CC) -c $(CFLAGS) $< -o $@
+	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(NAME): $(OBJECTS)
-	$(AR) -rcs ${NAME} ${OBJECTS}
+	@$(AR) -rcs ${NAME} ${OBJECTS}
+	@echo "\033[1;32mLibft library ready!\n\033[0m"
 
 all: $(NAME)
 
@@ -30,14 +32,16 @@ all: $(NAME)
 bonus:	.bonus
 
 .bonus:	$(OBJECTS) $(BOBJECTS)
-	$(AR) -rcs ${NAME} ${BOBJECTS} ${OBJECTS}
+	@$(AR) -rcs ${NAME} ${BOBJECTS} ${OBJECTS}
 	touch .bonus
 
 clean:
-	rm -f $(OBJECTS) $(BOBJECTS) .bonus
+	@rm -f $(OBJECTS) $(BOBJECTS) .bonus
+	@echo "\033[0;36mClean libft [\033[0;32mDONE\033[0;36m]\033[0m"
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "\033[0;36mFClean libft [\033[0;32mDONE\033[0;36m]\033[0m"
 
 re: fclean all
 

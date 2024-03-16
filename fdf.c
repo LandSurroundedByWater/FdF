@@ -6,11 +6,18 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/15 18:18:11 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/16 10:45:26 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+
+static void init_z_factor(t_map *map)
+{
+	if (map->highest_z > 100)
+		map->z_factor = 0.2; 
+}
 
 static void	init_map(int fd, t_map *map, char **argv)
 {
@@ -83,8 +90,7 @@ int	main(int argc, char **argv)
 		init_map(fd, map, argv);
 		allocate_map(map);
 		fill_map(fd2, map, argv);
-		printf("h %d\n", map->highest_z);
-		//map->z_factor = 100 / abs(map->highest_z);
+		init_z_factor(map);
 		if (!(map->mlx = mlx_init(WIDTH, HEIGHT, "FDF", false)))
 			ft_free_map_and_error(map, ERR_MLX);
 		if (!(map->image = mlx_new_image(map->mlx, WIDTH, HEIGHT)))

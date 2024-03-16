@@ -6,14 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:51:06 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/08 09:43:09 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/16 09:49:42 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-#include <stdlib.h>
-#include <stdio.h>
 
 static size_t string_length(const char *s, char c) {
     size_t len = 0;

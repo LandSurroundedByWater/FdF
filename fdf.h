@@ -17,16 +17,18 @@
 # include "libft/get_next_line.h"
 # include <time.h>
 
-# define WIDTH 1920
-# define HEIGHT 1280
 
-# define CLR_DISCO          0x9A1F6AFF
-# define CLR_BRICK_RED      0xC2294EFF
-# define CLR_FLAMINGO       0xEC4B27FF
-# define CLR_JAFFA          0xEF8633FF
-# define CLR_SAFFRON        0xF3AF3DFF
-# define BG_COLOR 			0x050203FF
-# define SB_COLOR 			0x152238FF
+# define WIDTH 1280
+# define HEIGHT 720
+
+# define COL_DISCO          0x9A1F6AFF
+# define COL_BRICK_RED      0xC2294EFF
+# define COL_FLAMINGO       0xEC4B27FF
+# define COL_JAFFA          0xEF8633FF
+# define COL_SAFFRON        0xF3AF3DFF
+# define COL_BG 			0x050203FF
+# define COL_LINE			0xF8F7edFF
+# define COL_LINE2			0x8B0000C8
 
 # define ERR_INFILE "Invalid map"
 # define ERR_ARG "Invalid amount of arguments"

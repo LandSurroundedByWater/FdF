@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:13:44 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/15 18:19:23 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/16 10:25:37 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,46 +36,49 @@ void	count_rows(int fd, t_map *map, char **argv)
 
 void	count_columns(int fd, t_map *map, char **argv)
 {
-	int		bytes_read;
-	char	buffer[100000];
-	int		i;
+	int bytes_read;
+    char buffer;
+    int prev_char;
+	int firstisspace;
+	
+	prev_char = '\n';
+	firstisspace = 0;
+    fd = open(argv[1], O_RDONLY);
+    if (fd < 0)
+        ft_free_map_and_error(map, ERR_INFILE);
 
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		ft_free_map_and_error(map, ERR_INFILE);
-	 while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
-	 {
-		i = -1;
-		while(++i < bytes_read || buffer[i] == '\n')
+    while ((bytes_read = read(fd, &buffer, 1)) > 0) 
+	{
+		if (!firstisspace && buffer == ' ')
+			continue;
+		firstisspace = 1;	
+        if (buffer == ' ' && prev_char != ' ') 
 		{
-			if (buffer[i] == ' ')
-			{
-				map->cols++;
-				while(buffer[i] == ' ')
-					i++;
-			}
-			if (buffer[i] == '\n')
-				break ;
-		}
-		break ;
-	}
-	close(fd);
+            map->cols++;
+        } 
+		else if (buffer == '\n') 
+		{ // Count newline as a column
+            map->cols++;
+            break; // Exit the loop after counting the newline character
+        }
+        prev_char = buffer; // Update prev_char
+    }
 }
 
 static void	set_colours(t_point *point)
 {
 	if (point->z == 0)
-		point->col2 = 0x810202FF;
+		point->col2 = COL_JAFFA;
 	else if (point->z < 2)
-		point->col2 = CLR_DISCO;
+		point->col2 = COL_DISCO;
 	else if (point->z < 5)
-		point->col2 = CLR_FLAMINGO;
+		point->col2 = COL_FLAMINGO;
 	else if (point->z < 12)
-		point->col2 = 0x810202FF;
+		point->col2 = COL_BRICK_RED;
 	else if (point->z < 60)
-		point->col2 = CLR_JAFFA;
+		point->col2 = COL_JAFFA;
 	else
-		point->col2 = CLR_SAFFRON;
+		point->col2 = COL_SAFFRON;
 }
 
 static void	addrow(t_map *map, char **rowarr, int j)
@@ -103,7 +106,7 @@ static void	addrow(t_map *map, char **rowarr, int j)
 		if (split[1] != 0)
 			map->points[j][i].col = ft_atoi_hex(split[1]);
 		else
-			map->points[j][i].col = 0xFFFFFFFF;
+			map->points[j][i].col = COL_LINE;
 		i++;
 		ft_free_double_array(split);
 	}
