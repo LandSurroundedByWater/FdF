@@ -19,7 +19,9 @@ SRCS		= fdf.c \
 			utils1.c \
 			free_and_exit.c \
 			rotate_and_center.c \
-			draw_texts.c \
+			draw_utils.c \
+			draw_pixel.c \
+			init_utils.c \
 			key_hooks.c
 
 OBJ_DIR		= obj

@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:13:44 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/16 10:25:37 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/16 12:05:58 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	count_columns(int fd, t_map *map, char **argv)
     fd = open(argv[1], O_RDONLY);
     if (fd < 0)
         ft_free_map_and_error(map, ERR_INFILE);
-
     while ((bytes_read = read(fd, &buffer, 1)) > 0) 
 	{
 		if (!firstisspace && buffer == ' ')
@@ -57,12 +56,13 @@ void	count_columns(int fd, t_map *map, char **argv)
             map->cols++;
         } 
 		else if (buffer == '\n') 
-		{ // Count newline as a column
+		{
             map->cols++;
-            break; // Exit the loop after counting the newline character
+            break;
         }
-        prev_char = buffer; // Update prev_char
+        prev_char = buffer;
     }
+	close(fd);
 }
 
 static void	set_colours(t_point *point)
@@ -92,7 +92,7 @@ static void	addrow(t_map *map, char **rowarr, int j)
 		split = ft_split(rowarr[i], ',');
 		if (!split)
 		{
-			ft_free_double_array(rowarr);
+			ft_free_double_array(split);
 			ft_free_map_and_error(map, ERR_MALLOC);
 		}
 		map->points[j][i].col_theme = 2;

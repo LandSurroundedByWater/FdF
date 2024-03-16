@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/15 17:20:57 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/16 12:38:37 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,15 @@ void	my_keyhook(void *param)
 	if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE))
 	{
 		mlx_close_window(map->mlx);
+		mlx_terminate(map->mlx);
+		ft_free_map(map);
+		exit(0);
 	}
 	if (mlx_is_key_down(map->mlx, MLX_KEY_P))
+	{
 		change_projection(map);
+	}
+		
 	if (mlx_is_key_down(map->mlx, MLX_KEY_EQUAL))
 		map->z_factor += 0.2;
 	if (mlx_is_key_down(map->mlx, MLX_KEY_MINUS))

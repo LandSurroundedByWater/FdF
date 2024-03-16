@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/15 17:07:20 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/16 12:44:50 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	ft_free_map(t_map *map)
 	free(map->start);
 	free(map->end);
 	free(map);
+	map = NULL;
 }
 
 void	ft_free_double_array(char **array)

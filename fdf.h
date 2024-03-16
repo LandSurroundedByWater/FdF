@@ -110,14 +110,13 @@ void	fill_map(int fd, t_map *map, char **argv);
 //t_point *init_point(t_point *current, t_point orig);
 
 //Map drawing
-void	init_points(t_point *p1, t_point orig1, t_point *p2, t_point orig2);
+void	bresenham(t_line *newline, mlx_image_t* image, t_point start, t_point end);
 void	draw(t_map *map, mlx_image_t* image);
 void	draw_map(t_map *map);
 void	set_offset(t_map *map);
-
-//texts drawing
-void my_put_string(t_map *map, int x, int y);
-//void my_put_string(t_map *map, mlx_image_t *tmp_text, int x, int y);
+void draw_pixel(mlx_image_t* image, int x, int y, int32_t col);
+int32_t	get_col(t_point *start, t_point *end);
+int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 
 //rotate and center
 t_point correct_point_offset(t_point *point, t_map *map);
@@ -130,6 +129,8 @@ t_point rotate_z(t_point point, double angle);
 int		ft_atoi_hex(char *str);
 void	draw_pixel(mlx_image_t* image, int x, int y, int32_t col);
 char	**ft_split_fdf(char const *s, char c);
+void	init_points(t_point *p1, t_point orig1, t_point *p2, t_point orig2);
+void	init_line(t_line *line, t_point start, t_point end);
 
 //hooks
 void	my_scrollhook(double xdelta, double ydelta, void *param);

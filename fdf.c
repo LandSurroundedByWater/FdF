@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/16 10:45:26 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/16 12:39:54 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	init_map(int fd, t_map *map, char **argv)
 	map->z_factor = 5;
 	count_rows(fd, map, argv);
 	count_columns(fd, map, argv);
-	printf("r %d  c  %d\n", map->rows, map->cols);
 	map->size_factor = 1;
 	if (HEIGHT > WIDTH)
 		map->pic_size_related = WIDTH;
@@ -69,7 +68,6 @@ static void	looper(t_map *map)
 	mlx_loop_hook(map->mlx, my_keyhook, map);
 	mlx_scroll_hook(map->mlx, my_scrollhook, map);
 	mlx_loop(map->mlx);
-	mlx_terminate(map->mlx);
 }
 
 int	main(int argc, char **argv)
@@ -91,13 +89,14 @@ int	main(int argc, char **argv)
 		allocate_map(map);
 		fill_map(fd2, map, argv);
 		init_z_factor(map);
-		if (!(map->mlx = mlx_init(WIDTH, HEIGHT, "FDF", false)))
+		if (!(map->mlx = mlx_init(WIDTH, HEIGHT, argv[1], false)))
 			ft_free_map_and_error(map, ERR_MLX);
 		if (!(map->image = mlx_new_image(map->mlx, WIDTH, HEIGHT)))
 			ft_free_map_and_error(map, ERR_MLX);
 		if (mlx_image_to_window(map->mlx, map->image, 0, 0) == -1)
 			ft_free_map_and_error(map, ERR_MLX);
 		looper(map);
+		mlx_terminate(map->mlx);
 	}
 	ft_free_map(map);
 	exit(0);
