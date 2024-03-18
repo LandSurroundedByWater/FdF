@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:13:44 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/16 12:05:58 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/18 12:15:27 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ void	count_rows(int fd, t_map *map, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		ft_free_map_and_error(map, ERR_INFILE);
-	 while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
-	 {
+	bytes_read = 1;
+	while (bytes_read > 0)
+	{
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		i = 0;
-		while(i < bytes_read)
+		while (i < bytes_read)
 		{
 			if (buffer[i] == '\n')
 				map->rows++;
@@ -36,32 +38,30 @@ void	count_rows(int fd, t_map *map, char **argv)
 
 void	count_columns(int fd, t_map *map, char **argv)
 {
-	int bytes_read;
-    char buffer;
-    int prev_char;
-	int firstisspace;
-	
+	int		bytes_read;
+	char	buffer;
+	int		prev_char;
+	int		firstisspace;
+
 	prev_char = '\n';
 	firstisspace = 0;
-    fd = open(argv[1], O_RDONLY);
-    if (fd < 0)
-        ft_free_map_and_error(map, ERR_INFILE);
-    while ((bytes_read = read(fd, &buffer, 1)) > 0) 
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		ft_free_map_and_error(map, ERR_INFILE);
+	bytes_read = 1;
+	while (bytes_read > 0)
 	{
+		bytes_read = read(fd, &buffer, 1);
 		if (!firstisspace && buffer == ' ')
-			continue;
-		firstisspace = 1;	
-        if (buffer == ' ' && prev_char != ' ') 
-		{
-            map->cols++;
-        } 
-		else if (buffer == '\n') 
-		{
-            map->cols++;
-            break;
-        }
-        prev_char = buffer;
-    }
+			continue ;
+		firstisspace = 1;
+		if (buffer == ' ' && prev_char != ' ')
+			map->cols++;
+		else if (buffer == '\n')
+			break ;
+		prev_char = buffer;
+	}
+	map->cols++;
 	close(fd);
 }
 
@@ -83,26 +83,23 @@ static void	set_colours(t_point *point)
 
 static void	addrow(t_map *map, char **rowarr, int j)
 {
-	char **split;
-	int i;
+	char	**split;
+	int		i;
 
 	i = 0;
-	while(i < map->cols)
+	while (i < map->cols)
 	{
 		split = ft_split(rowarr[i], ',');
 		if (!split)
-		{
-			ft_free_double_array(split);
-			ft_free_map_and_error(map, ERR_MALLOC);
-		}
-		map->points[j][i].col_theme = 2;
+			ft_free_map_and_array_error(map, split, ERR_MALLOC);
+		map->points[j][i].col_theme = 1;
 		map->points[j][i].z = ft_atoi(split[0]) * map->z_factor;
-		if(map->points[j][i].z > map->highest_z)
+		if (map->points[j][i].z > map->highest_z)
 			map->highest_z = map->points[j][i].z;
-		if (map->points[j][i].z  != 0)
+		if (map->points[j][i].z != 0)
 			set_colours(&map->points[j][i]);
 		map->points[j][i].x = i * map->pic_width * map->size_factor;
-		map->points[j][i].y = j * map->pic_height * map->size_factor;
+		map->points[j][i].y = j * map->pic_width * map->size_factor;
 		if (split[1] != 0)
 			map->points[j][i].col = ft_atoi_hex(split[1]);
 		else
@@ -114,15 +111,15 @@ static void	addrow(t_map *map, char **rowarr, int j)
 
 void	fill_map(int fd, t_map *map, char **argv)
 {
-	char *row;
-	char **rowarr;
-	int j;
+	char	*row;
+	char	**rowarr;
+	int		j;
 
 	j = 0;
 	fd = open(argv[1], O_RDONLY);
-	if(fd < 0)
+	if (fd < 0)
 		exit (0);
-	while(j < map->rows)
+	while (j < map->rows)
 	{
 		row = get_next_line(fd);
 		if (row < 0)

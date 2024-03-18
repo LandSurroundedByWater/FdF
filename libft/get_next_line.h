@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:30:25 by tsaari            #+#    #+#             */
-/*   Updated: 2024/02/14 10:49:24 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/18 12:07:39 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,5 @@
 
 char	*get_next_line(int fd);
 char	*ft_free(char **ptr, char **ptr2);
-
 
 #endif

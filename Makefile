@@ -8,10 +8,10 @@ MLX_BUILD_DIR = $(MLX_DIR)/build
 MLX_TARGET = $(MLX_BUILD_DIR)/libmlx42.a
 CFLAGS = -Wall -Wextra -Werror -g
 #LDLFLAGS = -fsanitize=address
-MLXFLAGS = -Iinclude -lglfw 
-#HBFLAGS = -L"/Users/tsaari/.brew/opt/glfw/lib/"
+MLXFLAGS = -Iinclude -lglfw
+HBFLAGS = -L"/Users/tsaari/.brew/opt/glfw/lib/"
 FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
-LIBFT= 	libft/libft.a
+LIBFT =	libft/libft.a
 
 SRCS		= fdf.c \
 			parse_map.c \
@@ -20,9 +20,8 @@ SRCS		= fdf.c \
 			free_and_exit.c \
 			rotate_and_center.c \
 			draw_utils.c \
-			draw_pixel.c \
-			init_utils.c \
-			key_hooks.c
+			key_hooks.c \
+			hook_utils.c
 
 OBJ_DIR		= obj
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)

@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/17 19:59:50 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/18 11:54:31 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,65 +18,9 @@ void	ft_error(char *error)
 	exit(1);
 }
 
-void	ft_free_double_and_error(char **arr, char *error)
-{
-	int	i;
-
-	i = 0;
-	while (!arr[i])
-		free(arr[i]);
-	free(arr);
-	arr = NULL;
-	perror(error);
-	exit(1);
-}
-
-void	ft_free_single_and_error(char *arr, char *error)
-{
-	free(arr);
-	perror(error);
-	exit(1);
-}
-
-
-void	ft_free_map_and_error(t_map *map, char *error)
-{
-	int i;
-
-    i = 0;
-    while (i < map->rows)
-	{
-        free(map->points[i]);
-		i++;
-    }
-	free(map->points);
-	free(map->start);
-	free(map->end);
-	free(map);
-	map = NULL;
-	perror(error);
-	exit(1);
-}
-void	ft_free_map(t_map *map)
-{
-	int i;
-
-    i = 0;
-    while (i < map->rows)
-	{
-        free(map->points[i]);
-		i++;
-    }
-	free(map->points);
-	free(map->start);
-	free(map->end);
-	free(map);
-	map = NULL;
-}
-
 void	ft_free_double_array(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i] != NULL)
@@ -88,15 +32,59 @@ void	ft_free_double_array(char **array)
 	array = NULL;
 }
 
-void	ft_free_double_array_content(char **array)
+void	ft_free_map_and_array_error(t_map *map, char **array, char *error)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (array[i] != NULL)
+	ft_free_double_array(array);
+	while (i < map->rows)
 	{
-		free(array[i]);
+		free(map->points[i]);
 		i++;
 	}
-	array = NULL;
+	free(map->points);
+	free(map->start);
+	free(map->end);
+	free(map);
+	map = NULL;
+	perror(error);
+	exit(1);
+}
+
+void	ft_free_map_and_error(t_map *map, char *error)
+{
+	int	i;
+
+	i = 0;
+	while (i < map->rows)
+	{
+		free(map->points[i]);
+		i++;
+	}
+	free(map->points);
+	free(map->start);
+	free(map->end);
+	free(map);
+	map = NULL;
+	perror(error);
+	exit(1);
+}
+
+void	ft_free_map_and_exit(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < map->rows)
+	{
+		free(map->points[i]);
+		i++;
+	}
+	free(map->points);
+	free(map->start);
+	free(map->end);
+	free(map);
+	map = NULL;
+	exit(0);
 }

@@ -6,79 +6,13 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:51:06 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/16 09:49:42 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/18 12:07:20 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t string_length(const char *s, char c) {
-    size_t len = 0;
-    while (*s != c && *s != '\0') {
-        len++;
-        s++;
-    }
-    return len;
-}
-
-static void free_array(char **array, size_t count) {
-    for (size_t i = 0; i < count; i++) {
-        free(array[i]);
-    }
-    free(array);
-}
-
-static size_t count_strings(const char *s, char c) {
-    size_t strings = 0;
-    while (*s != '\0') {
-        if (*s != c) {
-            strings++;
-            while (*s != c && *s != '\0') {
-                s++;
-            }
-        } else {
-            s++;
-        }
-    }
-    return strings;
-}
-
-char **ft_split(const char *s, char c)
-{
-	size_t strings;
-	size_t i;
-
-	i  = 0;
-	strings = count_strings(s, c);
-	if (!s)
-        return NULL;
-    char **return_array = (char **)malloc((strings + 1) * sizeof(char *));
-    if (!return_array)
-        return NULL;
-    while (*s != '\0' && i < strings) {
-        if (*s != c) {
-            size_t len = string_length(s, c);
-            return_array[i] = (char *)malloc((len + 1) * sizeof(char));
-            if (!return_array[i]) {
-                free_array(return_array, i);
-                return NULL;
-            }
-            for (size_t j = 0; j < len; j++) {
-                return_array[i][j] = s[j];
-            }
-            return_array[i][len] = '\0';
-            s += len;
-            i++;
-        }
-        s++;
-    }
-    return_array[i] = NULL;
-    return return_array;
-}
-
-
-
-/*static size_t	stringlenght(char *sc, char c)
+static size_t	stringlenght(char *sc, char c)
 {
 	size_t	len;
 
@@ -106,6 +40,7 @@ static char	**ft_free(char **s)
 	free(s);
 	return (0);
 }
+
 static size_t	countstrings(char const *s, char c)
 {
 	char	*sc;
@@ -125,7 +60,6 @@ static size_t	countstrings(char const *s, char c)
 		strings++;
 	return (strings);
 }
-
 
 char	**ft_split(char const *s, char c)
 {
@@ -154,4 +88,4 @@ char	**ft_split(char const *s, char c)
 	}
 	returnarray[i] = 0;
 	return (returnarray);
-}*/
+}

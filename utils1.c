@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 08:44:14 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/15 17:25:25 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/18 12:04:05 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static int	is_hexa(char c)
 
 int32_t	ft_atoi_hex(char *str)
 {
-	int32_t		i;
-	int32_t		result;
-	char		*str2;
+	int32_t	i;
+	int32_t	result;
+	char	*str2;
 
 	if (str[ft_strlen(str) - 1] == '\n')
 		str[ft_strlen(str) - 1] = '\0';
@@ -51,23 +51,3 @@ int32_t	ft_atoi_hex(char *str)
 	free(str2);
 	return (result);
 }
-/*void	print_map(t_map *map)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	while (j < map->rows)
-	{
-		i = 0;
-		while (i < map->cols)
-		{
-
-			printf("%d ", map->points[j][i].z);
-			i++;
-		}
-		printf("\n");
-		j++;
-	}
-
-}*/
