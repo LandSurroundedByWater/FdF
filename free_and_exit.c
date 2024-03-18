@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/16 12:44:50 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/17 19:59:50 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ void	ft_free_double_and_error(char **arr, char *error)
 	while (!arr[i])
 		free(arr[i]);
 	free(arr);
+	arr = NULL;
 	perror(error);
 	exit(1);
 }
+
 void	ft_free_single_and_error(char *arr, char *error)
 {
 	free(arr);
@@ -51,6 +53,7 @@ void	ft_free_map_and_error(t_map *map, char *error)
 	free(map->start);
 	free(map->end);
 	free(map);
+	map = NULL;
 	perror(error);
 	exit(1);
 }
@@ -82,6 +85,7 @@ void	ft_free_double_array(char **array)
 		i++;
 	}
 	free(array);
+	array = NULL;
 }
 
 void	ft_free_double_array_content(char **array)
@@ -94,4 +98,5 @@ void	ft_free_double_array_content(char **array)
 		free(array[i]);
 		i++;
 	}
+	array = NULL;
 }

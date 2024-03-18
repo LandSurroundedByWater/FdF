@@ -6,32 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:10:01 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/16 12:11:30 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/17 09:29:02 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	init_line(t_line *line, t_point start, t_point end)
-{
-	int temp;
-
-	line->dx = end.x - start.x;
-	line->dy = end.y - start.y;
-	line->p = 0;
-	line->swapped = 0;
-	if(line->dx < 0)
-		line->dx *= -1;
-	if(line->dy < 0)
-		line->dy *= -1;
-	if(line->dy > line->dx)
-	{
-		temp = line->dx;
-		line->dx = line->dy;
-		line->dy = temp;
-		line->swapped = 1;
-	}
-}
 
 void	init_points(t_point *p1, t_point orig1, t_point *p2, t_point orig2)
 {

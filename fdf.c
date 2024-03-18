@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/16 12:39:54 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/17 20:28:22 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,22 @@ static void	allocate_map(t_map *map)
 	}
 }
 
+
 static void	looper(t_map *map)
 {
+
 	mlx_loop_hook(map->mlx, my_keyhook, map);
 	mlx_scroll_hook(map->mlx, my_scrollhook, map);
 	mlx_loop(map->mlx);
 }
 
+
+
 int	main(int argc, char **argv)
 {
 	t_map	*map = NULL;
 	int		fd;
-	int		fd2;
 
-	fd2 = 1;
 	fd = 0;
 	if (argc != 2)
 		ft_error(ERR_ARG);
@@ -87,13 +89,9 @@ int	main(int argc, char **argv)
 	{
 		init_map(fd, map, argv);
 		allocate_map(map);
-		fill_map(fd2, map, argv);
+		fill_map(fd, map, argv);
 		init_z_factor(map);
 		if (!(map->mlx = mlx_init(WIDTH, HEIGHT, argv[1], false)))
-			ft_free_map_and_error(map, ERR_MLX);
-		if (!(map->image = mlx_new_image(map->mlx, WIDTH, HEIGHT)))
-			ft_free_map_and_error(map, ERR_MLX);
-		if (mlx_image_to_window(map->mlx, map->image, 0, 0) == -1)
 			ft_free_map_and_error(map, ERR_MLX);
 		looper(map);
 		mlx_terminate(map->mlx);

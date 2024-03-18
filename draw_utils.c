@@ -6,46 +6,45 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:13:17 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/16 12:32:31 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/17 10:11:19 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static int get_sign(int x)
+int get_s(int a, int b)
 {
-	if (x > 0)
+	if (a < b)
 		return (1);
-	else if (x < 0)
-		return (-1);
 	else
-		return (0);
+		return (-1);
 }
 
-void	bresenham(t_line *newline, mlx_image_t* image, t_point start, t_point end)
+void bresenham_line(mlx_image_t *image, t_point start, t_point end, int32_t col) 
 {
-	int i;
+    int dx;
+    int dy;
+    int sx;
+    int sy;
+    int err;
 
-	i = 0;
-	newline->p = 2 * newline->dy - newline->dx;
-	while (i < newline->dx)
-	{
-		draw_pixel(image, start.x, start.y, newline->col);
-		while(newline->p >= 0)
-		{
-			newline->p = newline->p - 2 * newline->dx;
-			if (newline->swapped)
-				start.x += get_sign(end.x - start.x);
-			else
-				start.y += get_sign(end.y - start.y);
-		}
-		newline->p = newline->p + 2 * newline->dy;
-		if (newline->swapped)
-			start.y += get_sign(end.y - start.y);
-		else
-			start.x += get_sign(end.x - start.x);
-		i++;
-	}
+	dx = abs(end.x - start.x);
+	dy = abs(end.y - start.y);
+	sx = get_s(start.x, end.x);
+	sy = get_s(start.y, end.y);
+	err = dx - dy;;
+    while (start.x != end.x || start.y != end.y) {
+        draw_pixel(image, start.x, start.y, col);
+        int e2 = 2 * err;
+        if (e2 > -dy) {
+            err -= dy;
+            start.x += sx;
+        }
+        if (e2 < dx) {
+            err += dx;
+            start.y += sy;
+        }
+    }
 }
 
 void	set_offset(t_map *map)

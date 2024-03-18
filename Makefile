@@ -1,6 +1,6 @@
 NAME = fdf
 
-CC = gcc
+CC = cc
 RM = rm -rf
 
 MLX_DIR = MLX42

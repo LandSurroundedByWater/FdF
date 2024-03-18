@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/16 12:23:38 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/17 20:28:02 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,16 @@
 
 void	draw_line(mlx_image_t* image, t_map *map, t_point *start, t_point *end)
 {
-	t_line *newline;
+	int32_t col;
 
-	newline = malloc(sizeof(t_line));
-	if (!newline)
-		ft_free_map_and_error(map, ERR_MALLOC);
-	newline->col = get_col(start, end);
+	col = get_col(start, end);
 	set_offset(map);
 	*start = rotate(*start, map);
 	*end = rotate(*end, map);
 	*start = correct_point_offset(start, map);
 	*end = correct_point_offset(end, map);
-	init_line(newline, *start, *end);
-	bresenham(newline, image, *start, *end);
+	bresenham_line(image, *start, *end, col);
 	draw_pixel(image, end->x, end->y, get_col(start, end));
-	free(newline);
 }
 
 static void draw_bg_pixel(mlx_image_t* image, int x, int y, int32_t col)
@@ -37,7 +32,6 @@ static void draw_bg_pixel(mlx_image_t* image, int x, int y, int32_t col)
 	int32_t g = (col >> 16) & 0xFF;
 	int32_t b = (col >> 8) & 0xFF;
 	int32_t a = col & 0xFF;
-
 	mlx_put_pixel(image, x, y, ft_pixel(r, g, b, a));
 }
 
@@ -85,6 +79,7 @@ void draw_map(t_map *map)
 {
 	mlx_image_t *newimage;
 	mlx_image_t *temp;
+	
 	if (!(newimage = mlx_new_image(map->mlx, WIDTH, HEIGHT)))
 		ft_free_map_and_error(map, ERR_MLX);
 	if (mlx_image_to_window(map->mlx, newimage, 0, 0) == -1)

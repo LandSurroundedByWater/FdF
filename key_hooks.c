@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/16 12:38:37 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/17 20:27:46 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,57 @@ void	change_projection(t_map *map)
 		map->projection.is_iso = true;
 	}
 }
+/*static void correct_offset(t_map *map)
+{
+	int i;
+	int j;
+
+	map->offset_y = ((map->points[0][0].y + map->points[map->rows - 1][map->cols - 1].y) / 2);
+	map->offset_x = ((map->points[0][0].x + map->points[map->rows - 1][map->cols - 1].x) / 2);
+	j = 0;
+	while (j < map->rows)
+	{
+		i = 0;
+		while (i < map->cols)
+		{
+			map->points[j][i].x = map->points[j][i].x + map->origox - map->offset_x;
+			map->points[j][i].y = map->points[j][i].y + map->origoy - map->offset_y;
+			i++;
+		}
+		j++;
+	}
+}
+
+static void make_iso(t_map *map)
+{
+	map->projection.alpha = 0;
+	map->projection.beta = 0;
+	map->projection.gamma = 0;
+	map->z_factor = 1;
+	int i;
+	int j;
+	float angle = 0.4;
+
+	j = 0;
+	while (j < map->rows)
+	{
+		i = 0;
+		while (i < map->cols)
+		{
+			int x = map->points[j][i].x;
+			int y = map->points[j][i].y;
+			map->points[j][i].x =(x - y) * cos(angle);
+			map->points[j][i].y =(x + y) * sin(angle) - ((map->points[j][i].z) * map->z_factor);
+			i++;
+		}
+		j++;
+	}
+	map->basic = false;
+	correct_offset(map);
+}*/
+
+
+
 static void	my_translate_keyhook(t_map *map)
 {
 	if (mlx_is_key_down(map->mlx, MLX_KEY_UP))

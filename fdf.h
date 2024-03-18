@@ -117,6 +117,7 @@ void	set_offset(t_map *map);
 void draw_pixel(mlx_image_t* image, int x, int y, int32_t col);
 int32_t	get_col(t_point *start, t_point *end);
 int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
+void bresenham_line(mlx_image_t *image, t_point start, t_point end, int32_t col);
 
 //rotate and center
 t_point correct_point_offset(t_point *point, t_map *map);
