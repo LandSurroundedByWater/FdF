@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/18 11:54:31 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/19 12:56:24 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	ft_free_map_and_array_error(t_map *map, char **array, char *error)
 	int	i;
 
 	i = 0;
+	perror(error);
 	ft_free_double_array(array);
 	while (i < map->rows)
 	{
@@ -48,7 +49,6 @@ void	ft_free_map_and_array_error(t_map *map, char **array, char *error)
 	free(map->end);
 	free(map);
 	map = NULL;
-	perror(error);
 	exit(1);
 }
 
@@ -57,6 +57,7 @@ void	ft_free_map_and_error(t_map *map, char *error)
 	int	i;
 
 	i = 0;
+	perror(error);
 	while (i < map->rows)
 	{
 		free(map->points[i]);
@@ -67,7 +68,6 @@ void	ft_free_map_and_error(t_map *map, char *error)
 	free(map->end);
 	free(map);
 	map = NULL;
-	perror(error);
 	exit(1);
 }
 

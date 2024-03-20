@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:13:44 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/18 12:15:27 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/19 12:58:19 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	count_rows(int fd, t_map *map, char **argv)
 			i++;
 		}
 	}
+	if (map->rows == 0)
+		ft_free_map_and_error(map, ERR_INFILE);
 	close(fd);
 }
 
@@ -92,7 +94,6 @@ static void	addrow(t_map *map, char **rowarr, int j)
 		split = ft_split(rowarr[i], ',');
 		if (!split)
 			ft_free_map_and_array_error(map, split, ERR_MALLOC);
-		map->points[j][i].col_theme = 1;
 		map->points[j][i].z = ft_atoi(split[0]) * map->z_factor;
 		if (map->points[j][i].z > map->highest_z)
 			map->highest_z = map->points[j][i].z;
@@ -123,7 +124,7 @@ void	fill_map(int fd, t_map *map, char **argv)
 	{
 		row = get_next_line(fd);
 		if (row < 0)
-			ft_free_map_and_error(map, ERR_SPLIT);
+			ft_free_map_and_error(map, ERR_MALLOC);
 		rowarr = ft_split(row, ' ');
 		if (!rowarr)
 			ft_free_map_and_error(map, ERR_MALLOC);

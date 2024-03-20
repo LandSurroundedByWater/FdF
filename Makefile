@@ -6,8 +6,7 @@ RM = rm -rf
 MLX_DIR = MLX42
 MLX_BUILD_DIR = $(MLX_DIR)/build
 MLX_TARGET = $(MLX_BUILD_DIR)/libmlx42.a
-CFLAGS = -Wall -Wextra -Werror -g
-#LDLFLAGS = -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 MLXFLAGS = -Iinclude -lglfw
 HBFLAGS = -L"/Users/tsaari/.brew/opt/glfw/lib/"
 FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit

@@ -6,11 +6,49 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/18 11:39:26 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/19 14:03:31 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+static void	re_config_map(t_map *map)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	while (j < map->rows)
+	{
+		i = 0;
+		while (i < map->cols)
+		{
+			map->points[j][i].x = i * map->pic_width;
+			map->points[j][i].y = j * map->pic_height;
+			i++;
+		}
+		j++;
+	}
+}
+
+void	my_scrollhook(double xdelta, double ydelta, void *param)
+{
+	t_map	*map;
+
+	map = param;
+	(void) xdelta;
+	if (ydelta > 0 && map->size_factor > 0)
+	{
+		map->size_factor -= 0.2;
+	}
+	else if (ydelta < 0 && map->size_factor < 40)
+	{
+		map->size_factor += 0.2;
+	}
+	map->pic_width = map->pic_size_related / map->cols * map->size_factor;
+	map->pic_height = map->pic_size_related / map->rows * map->size_factor;
+	re_config_map(map);
+}
 
 static void	my_translate_keyhook(t_map *map)
 {
@@ -22,6 +60,11 @@ static void	my_translate_keyhook(t_map *map)
 		map->origox += 20;
 	if (mlx_is_key_down(map->m, MLX_KEY_LEFT))
 		map->origox -= 20;
+	if (mlx_is_key_down(map->m, MLX_KEY_EQUAL))
+		map->z_factor += 0.05;
+	if (mlx_is_key_down(map->m, MLX_KEY_MINUS))
+		map->z_factor -= 0.05;
+	mlx_scroll_hook(map->m, my_scrollhook, map);
 	draw_map(map);
 }
 
@@ -51,50 +94,21 @@ void	my_keyhook(void *param)
 		ft_free_map_and_exit(map);
 	if (mlx_is_key_down(map->m, MLX_KEY_P))
 		change_projection(map);
-	if (mlx_is_key_down(map->m, MLX_KEY_EQUAL))
-		map->z_factor += 0.05;
-	if (mlx_is_key_down(map->m, MLX_KEY_MINUS))
-		map->z_factor -= 0.05;
+	if (mlx_is_key_down(map->m, MLX_KEY_SPACE))
+		disco(map);
 	if (mlx_is_key_down(map->m, MLX_KEY_1))
-		change_color_theme(map, 1);
+		map->col_theme = 1;
 	if (mlx_is_key_down(map->m, MLX_KEY_2))
-		change_color_theme(map, 2);
+		map->col_theme = 2;
 	if (mlx_is_key_down(map->m, MLX_KEY_3))
-		change_color_theme(map, 3);
+		map->col_theme = 3;
+	if (mlx_is_key_down(map->m, MLX_KEY_4))
+		map->col_theme = 4;
+	if (mlx_is_key_down(map->m, MLX_KEY_5))
+		map->col_theme = 5;
+	if (mlx_is_key_down(map->m, MLX_KEY_6))
+		map->col_theme = 6;
+	if (mlx_is_key_down(map->m, MLX_KEY_7))
+		map->col_theme = 7;
 	my_rotate_keyhook(map);
-}
-
-static void	re_config_map(t_map *map)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	while (j < map->rows)
-	{
-		i = 0;
-		while (i < map->cols)
-		{
-			map->points[j][i].x = i * map->pic_width;
-			map->points[j][i].y = j * map->pic_height;
-			i++;
-		}
-		j++;
-	}
-}
-
-void	my_scrollhook(double xdelta, double ydelta, void *param)
-{
-	t_map	*map;
-
-	map = param;
-	(void) xdelta;
-	if (ydelta > 0 && map->size_factor > 0)
-		map->size_factor -= 0.1;
-	else if (ydelta < 0 && map->size_factor < 10)
-		map->size_factor += 0.1;
-	map->pic_width = map->pic_size_related / map->cols * map->size_factor;
-	map->pic_height = map->pic_size_related / map->rows * map->size_factor;
-	re_config_map(map);
-	draw_map(map);
 }

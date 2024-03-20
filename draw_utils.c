@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:13:17 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/18 10:47:31 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/19 14:18:49 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ void	init_points(t_point *p1, t_point orig1, t_point *p2, t_point orig2)
 	p1->x = orig1.x;
 	p1->y = orig1.y;
 	p1->z = orig1.z;
-	p1->col_theme = orig1.col_theme;
 	p2->col = orig2.col;
 	p2->col2 = orig2.col2;
 	p2->x = orig2.x;
 	p2->y = orig2.y;
 	p2->z = orig2.z;
-	p2->col_theme = orig2.col_theme;
 }
 
 int	get_s(int a, int b)
@@ -64,31 +62,27 @@ void	bresenham_line(mlx_image_t *image, t_point s, t_point e, int32_t col)
 
 void	set_offset(t_map *map)
 {
-	t_point	*first;
-	t_point	*last;
+	t_point	first;
+	t_point	last;
 
-	first = malloc(sizeof(t_point));
-	last = malloc(sizeof(t_point));
-	init_points(first, map->points[0][0], last, \
+	init_points(&first, map->points[0][0], &last, \
 	map->points[map->rows - 1][map->cols - 1]);
-	*first = rotate(*first, map);
-	*last = rotate(*last, map);
-	map->offset_y = map->origoy - ((first->y + last->y) / 2);
-	map->offset_x = map->origox - ((first->x + last->x) / 2);
-	free(first);
-	free(last);
+	first = rotate(first, map);
+	last = rotate(last, map);
+	map->offset_y = map->origoy - ((first.y + last.y) / 2);
+	map->offset_x = map->origox - ((first.x + last.x) / 2);
 }
 
-int32_t	get_col(t_point *start, t_point *end)
+int32_t	get_col(t_point *start, t_point *end, t_map *map)
 {
-	if (end->col_theme == 1)
+	if (map->col_theme == 1)
 	{
 		if (end->z >= start->z)
 			return (end->col);
 		else
 			return (start->col);
 	}
-	else if (end->col_theme == 2)
+	else if (map->col_theme == 2)
 	{
 		if (end->z == 0 && start->z == 0)
 			return (COL_LINE2);
@@ -97,6 +91,12 @@ int32_t	get_col(t_point *start, t_point *end)
 		else
 			return (end->col2);
 	}
-	else
+	else if (map->col_theme == 3)
 		return (COL_BLUE);
+	else if (map->col_theme == 4)
+		return (COL_SAFFRON);
+	else if (map->col_theme == 5)
+		return (COL_PINK);
+	else
+		return (COL_DISCO);
 }

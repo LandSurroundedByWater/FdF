@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/18 11:25:44 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/20 13:02:31 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ void	draw_line(mlx_image_t *image, t_map *map, t_point *start, t_point *end)
 {
 	int32_t	col;
 
-	col = get_col(start, end);
+	col = get_col(start, end, map);
 	*start = rotate(*start, map);
 	*end = rotate(*end, map);
 	*start = correct_point_offset(start, map);
 	*end = correct_point_offset(end, map);
-	start->dx = abs(end->x - start->x);
-	start->dy = abs(end->y - start->y);
+	start->dx = absolute_value(end->x - start->x);
+	start->dy = absolute_value(end->y - start->y);
 	start->err = start->dx - start->dy;
 	bresenham_line(image, *start, *end, col);
 	if (pixel_ok(end->x, end->y) > 0)
-		mlx_put_pixel(image, end->x, end->y, get_col(start, end));
+		mlx_put_pixel(image, end->x, end->y, get_col(start, end, map));
 }
 
 static void	draw_background(mlx_image_t *image, int32_t col)
@@ -84,6 +84,9 @@ void	draw_map(t_map *map)
 	mlx_image_t	*newimage;
 	mlx_image_t	*temp;
 
+	if (map->origoy >= HEIGHT - (HEIGHT / 6) || map->origoy <= 0 + (HEIGHT / 6) \
+	|| map->origox >= WIDTH - (WIDTH / 8) || map->origox <= 0 + (WIDTH / 8))
+		map->change = 0;
 	newimage = mlx_new_image(map->m, WIDTH, HEIGHT);
 	if (!newimage)
 		ft_free_map_and_error(map, ERR_MLX);

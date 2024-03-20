@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:50:52 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/18 11:38:43 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/19 14:04:35 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,11 @@
 # define FDF_H
 
 # include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
 # include <fcntl.h>
-# include <sys/wait.h>
-# include <sys/types.h>
-# include <errno.h>
-# include <string.h>
-# include <limits.h>
 # include <math.h>
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
 # include "libft/get_next_line.h"
-# include <time.h>
 
 # define WIDTH 1920
 # define HEIGHT 1080
@@ -40,11 +32,11 @@
 # define COL_LINE		0xF8F7edFF
 # define COL_LINE2		0x8B0000C8
 # define COL_BLUE		0x1B03A3FF
+# define COL_PINK			0xFFC0CBFF
 
 # define ERR_INFILE "Invalid map"
 # define ERR_ARG "Invalid amount of arguments"
 # define ERR_MALLOC "Malloc error"
-# define ERR_SPLIT "Invalid map"
 # define ERR_MLX "MLX error"
 
 typedef struct s_error
@@ -59,7 +51,6 @@ typedef struct s_point
 	int		z;
 	int32_t	col;
 	int32_t	col2;
-	int		col_theme;
 	int		err;
 	int		dx;
 	int		dy;
@@ -99,6 +90,8 @@ typedef struct s_map
 	int			pic_size_related;
 	t_proj		projection;
 	int			highest_z;
+	int			change;
+	int			col_theme;
 }	t_map;
 
 //Map parsing
@@ -111,7 +104,7 @@ void	draw(t_map *map, mlx_image_t *image);
 void	draw_map(t_map *map);
 void	set_offset(t_map *map);
 int		pixel_ok(int x, int y);
-int32_t	get_col(t_point *start, t_point *end);
+int32_t	get_col(t_point *start, t_point *end, t_map *map);
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 void	bresenham_line(mlx_image_t *image, t_point s, t_point e, int32_t col);
 
@@ -127,12 +120,15 @@ int		ft_atoi_hex(char *str);
 void	draw_pixel(mlx_image_t *image, int x, int y, int32_t col);
 char	**ft_split_fdf(char const *s, char c);
 void	init_points(t_point *p1, t_point orig1, t_point *p2, t_point orig2);
+int		absolute_value(int num);
 
 //hooks
 void	my_scrollhook(double xdelta, double ydelta, void *param);
 void	my_keyhook(void *param);
 void	change_color_theme(t_map *map, int theme);
 void	change_projection(t_map *map);
+void	disco(t_map *map);
+void	discomove(t_map *map);
 
 //free and error
 void	ft_free_map_and_array_error(t_map *map, char **array, char *error);

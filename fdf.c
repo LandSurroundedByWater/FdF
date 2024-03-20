@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/18 12:17:32 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/19 10:29:35 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 static void	init_z_factor(t_map *map)
 {
 	if (map->highest_z > 140)
-		map->z_factor = 0.1;
+		map->z_factor = 0.4;
+	else if (map->highest_z > 100)
+		map->z_factor = 0.8;
 }
 
 static void	init_map(int fd, t_map *map, char **argv)
@@ -24,19 +26,17 @@ static void	init_map(int fd, t_map *map, char **argv)
 	map->rows = 0;
 	map->points = NULL;
 	map->projection.alpha = 0.45;
-	map->projection.beta = 0.35264;
-	map->projection.gamma = -0.45;
+	map->projection.beta = -0.35264;
+	map->projection.gamma = 0.45;
 	map->projection.is_iso = true;
 	map->z_factor = 3;
+	map->col_theme = 1;
 	count_rows(fd, map, argv);
 	count_columns(fd, map, argv);
-	map->size_factor = 0.3;
+	map->size_factor = 0.6;
 	if (map->cols > 90)
 		map->size_factor *= 1.5;
-	if (HEIGHT > WIDTH)
-		map->pic_size_related = WIDTH;
-	else
-		map->pic_size_related = HEIGHT;
+	map->pic_size_related = WIDTH;
 	map->origox = WIDTH / 2;
 	map->origoy = HEIGHT / 2;
 	map->pic_width = map->pic_size_related / map->cols;
@@ -69,7 +69,6 @@ static void	allocate_map(t_map *map)
 static void	looper(t_map *map)
 {
 	mlx_loop_hook(map->m, my_keyhook, map);
-	mlx_scroll_hook(map->m, my_scrollhook, map);
 	mlx_loop(map->m);
 }
 

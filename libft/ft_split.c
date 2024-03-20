@@ -6,86 +6,99 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:51:06 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/18 12:07:20 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/18 16:14:50 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	stringlenght(char *sc, char c)
+static size_t	string_length(const char *s, char c)
 {
 	size_t	len;
 
 	len = 0;
-	while (*sc != c && *sc != '\0')
+	while (*s != c && *s != '\0')
 	{
 		len++;
-		sc++;
+		s++;
 	}
 	return (len);
 }
 
-static char	**ft_free(char **s)
+static char	**free_array(char **array, size_t count)
 {
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != 0)
+	while (count > 0)
 	{
-		free (s[i]);
-		i++;
+		free(array[count]);
+		count--;
 	}
-	free(s);
-	return (0);
+	free(array);
+	return (NULL);
 }
 
-static size_t	countstrings(char const *s, char c)
+static size_t	count_strings(const char *s, char c)
 {
-	char	*sc;
-	char	*found;
 	size_t	strings;
 
-	sc = (char *)s;
 	strings = 0;
-	while (ft_memchr(sc, c, ft_strlen(sc)))
+	while (*s != '\0')
 	{
-		found = ft_memchr(sc, c, ft_strlen(sc));
-		if ((found - sc) >= 1)
+		if (*s != c)
+		{
 			strings++;
-		sc = found + 1;
+			while (*s != c && *s != '\0')
+			{
+				s++;
+			}
+		}
+		else
+		{
+			s++;
+		}
 	}
-	if (ft_strlen(sc) > 0)
-		strings++;
 	return (strings);
 }
 
-char	**ft_split(char const *s, char c)
+static void	*get_word(size_t len, const char *s)
 {
-	char	*sc;
-	char	**returnarray;
-	size_t	i;
+	size_t	j;
+	char	*str;
 
-	sc = (char *)s;
+	str = (char *)malloc((len + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	j = -1;
+	while (++j < len)
+		str[j] = s[j];
+	str[len] = '\0';
+	return (str);
+}
+
+char	**ft_split(const char *s, char c)
+{
+	size_t	strings;
+	size_t	i;
+	size_t	len;
+	char	**return_array;
+
 	i = 0;
-	if (!s)
-		return (0);
-	returnarray = (char **)malloc((countstrings(s, c) + 1) * sizeof(char *));
-	if (!returnarray)
-		return (ft_free(returnarray));
-	while (i < countstrings(s, c))
+	strings = count_strings(s, c);
+	return_array = (char **)malloc((strings + 1) * sizeof(char *));
+	if (!return_array)
+		return (NULL);
+	while (*s != '\0' && i < strings)
 	{
-		if (*sc != c)
+		if (*s != c)
 		{
-			returnarray[i] = ft_substr(sc, 0, stringlenght(sc, c));
-			if (!returnarray[i])
-				return (ft_free(returnarray));
-			sc += stringlenght(sc, c) - 1;
+			len = string_length(s, c);
+			return_array[i] = get_word(len, s);
+			if (!return_array[i])
+				free_array(return_array, i);
+			s += len;
 			i++;
 		}
-		sc++;
+		s++;
 	}
-	returnarray[i] = 0;
-	return (returnarray);
+	return_array[i] = NULL;
+	return (return_array);
 }
