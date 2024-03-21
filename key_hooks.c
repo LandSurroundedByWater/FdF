@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/19 14:03:31 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/21 08:42:36 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,47 +23,51 @@ static void	re_config_map(t_map *map)
 		i = 0;
 		while (i < map->cols)
 		{
-			map->points[j][i].x = i * map->pic_width;
-			map->points[j][i].y = j * map->pic_height;
+			map->points[j][i].x = i * map->size_factor;
+			map->points[j][i].y = j * map->size_factor;
 			i++;
 		}
 		j++;
 	}
 }
 
-void	my_scrollhook(double xdelta, double ydelta, void *param)
+static void	my_scrollhook(double xdelta, double ydelta, void *param)
 {
 	t_map	*map;
 
 	map = param;
 	(void) xdelta;
-	if (ydelta > 0 && map->size_factor > 0)
-	{
-		map->size_factor -= 0.2;
-	}
-	else if (ydelta < 0 && map->size_factor < 40)
-	{
-		map->size_factor += 0.2;
-	}
-	map->pic_width = map->pic_size_related / map->cols * map->size_factor;
-	map->pic_height = map->pic_size_related / map->rows * map->size_factor;
+	if (ydelta > 0)
+		map->size_factor -= map->size_factor / 10;
+	else if (ydelta < 0)
+		map->size_factor += map->size_factor / 10;
 	re_config_map(map);
 }
 
 static void	my_translate_keyhook(t_map *map)
 {
-	if (mlx_is_key_down(map->m, MLX_KEY_UP))
-		map->origoy -= 20;
-	if (mlx_is_key_down(map->m, MLX_KEY_DOWN))
-		map->origoy += 20;
-	if (mlx_is_key_down(map->m, MLX_KEY_RIGHT))
-		map->origox += 20;
-	if (mlx_is_key_down(map->m, MLX_KEY_LEFT))
-		map->origox -= 20;
-	if (mlx_is_key_down(map->m, MLX_KEY_EQUAL))
-		map->z_factor += 0.05;
-	if (mlx_is_key_down(map->m, MLX_KEY_MINUS))
-		map->z_factor -= 0.05;
+	if (map->camera_dir == true)
+	{
+		if (mlx_is_key_down(map->m, MLX_KEY_UP))
+			map->origoy += 20;
+		if (mlx_is_key_down(map->m, MLX_KEY_DOWN))
+			map->origoy -= 20;
+		if (mlx_is_key_down(map->m, MLX_KEY_RIGHT))
+			map->origox -= 20;
+		if (mlx_is_key_down(map->m, MLX_KEY_LEFT))
+			map->origox += 20;
+	}
+	else if (map->camera_dir == false)
+	{
+		if (mlx_is_key_down(map->m, MLX_KEY_UP))
+			map->origoy -= 20;
+		if (mlx_is_key_down(map->m, MLX_KEY_DOWN))
+			map->origoy += 20;
+		if (mlx_is_key_down(map->m, MLX_KEY_RIGHT))
+			map->origox += 20;
+		if (mlx_is_key_down(map->m, MLX_KEY_LEFT))
+			map->origox -= 20;
+	}
 	mlx_scroll_hook(map->m, my_scrollhook, map);
 	draw_map(map);
 }
@@ -71,17 +75,28 @@ static void	my_translate_keyhook(t_map *map)
 static void	my_rotate_keyhook(t_map *map)
 {
 	if (mlx_is_key_down(map->m, MLX_KEY_W))
-		map->projection.alpha += 0.03;
+		map->projection.alpha += 0.02;
 	if (mlx_is_key_down(map->m, MLX_KEY_S))
-		map->projection.alpha -= 0.03;
+		map->projection.alpha -= 0.02;
 	if (mlx_is_key_down(map->m, MLX_KEY_D))
-		map->projection.beta += 0.03;
+		map->projection.beta += 0.02;
 	if (mlx_is_key_down(map->m, MLX_KEY_A))
-		map->projection.beta -= 0.03;
+		map->projection.beta -= 0.02;
 	if (mlx_is_key_down(map->m, MLX_KEY_Q))
-		map->projection.gamma -= 0.03;
+		map->projection.gamma -= 0.02;
 	if (mlx_is_key_down(map->m, MLX_KEY_E))
-		map->projection.gamma += 0.03;
+		map->projection.gamma += 0.02;
+	if (mlx_is_key_down(map->m, MLX_KEY_EQUAL))
+		map->z_factor += 0.05;
+	if (mlx_is_key_down(map->m, MLX_KEY_MINUS))
+		map->z_factor -= 0.05;
+	if (mlx_is_key_down(map->m, MLX_KEY_END))
+	{
+		if (map->camera_dir == true)
+			map->camera_dir = false;
+		else
+			map->camera_dir = true;
+	}
 	my_translate_keyhook(map);
 }
 

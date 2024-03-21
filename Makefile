@@ -37,6 +37,7 @@ $(MLX_TARGET):
 	@cd $(MLX_BUILD_DIR) && cmake ..
 	@cmake --build $(MLX_BUILD_DIR) -j4
 
+
 $(LIBFT):
 			@make -C "libft"
 
@@ -45,6 +46,7 @@ $(OBJ_DIR):
 
 $(NAME):	$(OBJ_DIR) $(OBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
 			@$(CC) $(OBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(HBFLAGS) $(FRAMEWORKS) $(LDLFLAGS) -o $(NAME)
+			@echo "\033[1;32mMLX42 library ready!\n\033[0m"
 			@echo "\033[1;32mFdF compile success!\n\033[0m"
 
 clean:

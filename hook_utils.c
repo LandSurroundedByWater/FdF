@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 11:37:46 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/20 13:01:41 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/21 08:28:20 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,21 @@ void	disco(t_map *map)
 
 void	change_projection(t_map *map)
 {
-	if (map->projection.is_iso == true)
+	if (mlx_is_key_down(map->m, MLX_KEY_P))
 	{
 		map->projection.alphasave = map->projection.alpha;
 		map->projection.betasave = map->projection.beta;
 		map->projection.gammasave = map->projection.gamma;
-		map->projection.alpha = 0;
+		map->projection.alpha = 1.5708;
 		map->projection.beta = 0;
 		map->projection.gamma = 0;
-		map->projection.is_iso = false;
+		map->origox = WIDTH / 2;
+		map->offset_y = HEIGHT / 2;
 	}
 	else
 	{
 		map->projection.alpha = map->projection.alphasave;
 		map->projection.beta = map->projection.betasave;
 		map->projection.gamma = map->projection.gammasave;
-		map->projection.is_iso = true;
 	}
-}
-
-int	absolute_value(int num)
-{
-	if (num < 0)
-		return (-num);
-	else
-		return (num);
 }

@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:13:44 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/19 12:58:19 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/21 11:01:35 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,49 +38,41 @@ void	count_rows(int fd, t_map *map, char **argv)
 	close(fd);
 }
 
-void	count_columns(int fd, t_map *map, char **argv)
+static void	read_cols(int fd, t_map *map)
 {
-	int		bytes_read;
 	char	buffer;
-	int		prev_char;
 	int		firstisspace;
+	int		bytes_read;
+	int		prev_char;
 
+	bytes_read = 1;
 	prev_char = '\n';
 	firstisspace = 0;
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		ft_free_map_and_error(map, ERR_INFILE);
-	bytes_read = 1;
 	while (bytes_read > 0)
 	{
 		bytes_read = read(fd, &buffer, 1);
 		if (!firstisspace && buffer == ' ')
 			continue ;
 		firstisspace = 1;
-		if (buffer == ' ' && prev_char != ' ')
-			map->cols++;
-		else if (buffer == '\n')
+		if (buffer == '\n')
+		{
+			if (prev_char != ' ')
+				map->cols++;
 			break ;
+		}
+		else if (buffer == ' ' && prev_char != ' ')
+			map->cols++;
 		prev_char = buffer;
 	}
-	map->cols++;
-	close(fd);
 }
 
-static void	set_colours(t_point *point)
+void	count_columns(int fd, t_map *map, char **argv)
 {
-	if (point->z == 0)
-		point->col2 = COL_JAFFA;
-	else if (point->z < 2)
-		point->col2 = COL_DISCO;
-	else if (point->z < 5)
-		point->col2 = COL_FLAMINGO;
-	else if (point->z < 12)
-		point->col2 = COL_BRICK_RED;
-	else if (point->z < 60)
-		point->col2 = COL_JAFFA;
-	else
-		point->col2 = COL_SAFFRON;
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		ft_free_map_and_error(map, ERR_INFILE);
+	read_cols(fd, map);
+	close(fd);
 }
 
 static void	addrow(t_map *map, char **rowarr, int j)
@@ -99,8 +91,8 @@ static void	addrow(t_map *map, char **rowarr, int j)
 			map->highest_z = map->points[j][i].z;
 		if (map->points[j][i].z != 0)
 			set_colours(&map->points[j][i]);
-		map->points[j][i].x = i * map->pic_width * map->size_factor;
-		map->points[j][i].y = j * map->pic_width * map->size_factor;
+		map->points[j][i].x = i * map->size_factor;
+		map->points[j][i].y = j * map->size_factor;
 		if (split[1] != 0)
 			map->points[j][i].col = ft_atoi_hex(split[1]);
 		else
@@ -123,12 +115,13 @@ void	fill_map(int fd, t_map *map, char **argv)
 	while (j < map->rows)
 	{
 		row = get_next_line(fd);
-		if (row < 0)
+		if (!row)
 			ft_free_map_and_error(map, ERR_MALLOC);
 		rowarr = ft_split(row, ' ');
+		free(row);
 		if (!rowarr)
 			ft_free_map_and_error(map, ERR_MALLOC);
-		free(row);
+		check_array(rowarr, map);
 		addrow(map, rowarr, j);
 		ft_free_double_array(rowarr);
 		j++;

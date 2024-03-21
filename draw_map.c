@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/20 13:02:31 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/21 08:18:08 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	draw_map(t_map *map)
 	|| map->origox >= WIDTH - (WIDTH / 8) || map->origox <= 0 + (WIDTH / 8))
 		map->change = 0;
 	newimage = mlx_new_image(map->m, WIDTH, HEIGHT);
-	if (!newimage)
+	if (!map->image)
 		ft_free_map_and_error(map, ERR_MLX);
 	if (mlx_image_to_window(map->m, newimage, 0, 0) == -1)
 		ft_free_map_and_error(map, ERR_MLX);

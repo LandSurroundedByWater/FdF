@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:51:06 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/18 16:14:50 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/21 09:24:43 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,19 @@ static size_t	string_length(const char *s, char c)
 	return (len);
 }
 
-static char	**free_array(char **array, size_t count)
+static char	**free_array(char **s)
 {
-	while (count > 0)
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
 	{
-		free(array[count]);
-		count--;
+		free (s[i]);
+		i++;
 	}
-	free(array);
+	free(s);
 	return (NULL);
 }
 
@@ -84,16 +89,16 @@ char	**ft_split(const char *s, char c)
 	i = 0;
 	strings = count_strings(s, c);
 	return_array = (char **)malloc((strings + 1) * sizeof(char *));
-	if (!return_array)
+	if (!return_array || !s)
 		return (NULL);
-	while (*s != '\0' && i < strings)
+	while (i < strings)
 	{
 		if (*s != c)
 		{
 			len = string_length(s, c);
 			return_array[i] = get_word(len, s);
-			if (!return_array[i])
-				free_array(return_array, i);
+			if (return_array[i] == NULL)
+				return (free_array(return_array));
 			s += len;
 			i++;
 		}

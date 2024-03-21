@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 08:44:14 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/18 12:04:05 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/21 13:44:37 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,39 @@ int32_t	ft_atoi_hex(char *str)
 	}
 	free(str2);
 	return (result);
+}
+
+int	absolute_value(int num)
+{
+	if (num < 0)
+		return (-num);
+	else
+		return (num);
+}
+
+void	check_array(char **rowarr, t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (rowarr[i] != NULL && *rowarr[i] != '\n')
+		i++;
+	if (i != map->cols)
+		ft_free_map_and_array_error(map, rowarr, ERR_INFILE);
+}
+
+void	set_colours(t_point *point)
+{
+	if (point->z == 0)
+		point->col2 = COL_JAFFA;
+	else if (point->z <= 2)
+		point->col2 = COL_DISCO;
+	else if (point->z <= 5)
+		point->col2 = COL_FLAMINGO;
+	else if (point->z <= 12)
+		point->col2 = COL_BRICK_RED;
+	else if (point->z <= 60)
+		point->col2 = COL_JAFFA;
+	else
+		point->col2 = COL_SAFFRON;
 }
