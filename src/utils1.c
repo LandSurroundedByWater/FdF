@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 08:44:14 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/21 13:44:37 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/22 14:09:41 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 static int	is_hexa(char c)
 {
@@ -69,20 +69,4 @@ void	check_array(char **rowarr, t_map *map)
 		i++;
 	if (i != map->cols)
 		ft_free_map_and_array_error(map, rowarr, ERR_INFILE);
-}
-
-void	set_colours(t_point *point)
-{
-	if (point->z == 0)
-		point->col2 = COL_JAFFA;
-	else if (point->z <= 2)
-		point->col2 = COL_DISCO;
-	else if (point->z <= 5)
-		point->col2 = COL_FLAMINGO;
-	else if (point->z <= 12)
-		point->col2 = COL_BRICK_RED;
-	else if (point->z <= 60)
-		point->col2 = COL_JAFFA;
-	else
-		point->col2 = COL_SAFFRON;
 }

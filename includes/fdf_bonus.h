@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   fdf_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:50:52 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/21 11:01:20 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/22 14:41:24 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef FDF_BONUS_H
+# define FDF_BONUS_H
 
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
-# include "MLX42/include/MLX42/MLX42.h"
-# include "libft/libft.h"
-# include "libft/get_next_line.h"
+# include "../MLX42/include/MLX42/MLX42.h"
+# include "../libft/libft.h"
+# include "../libft/get_next_line.h"
 
 # define WIDTH 1920
 # define HEIGHT 1080

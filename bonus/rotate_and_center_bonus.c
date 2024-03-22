@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate_and_center.c                                :+:      :+:    :+:   */
+/*   rotate_and_center_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 13:18:15 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/20 11:23:24 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/22 11:16:54 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf_bonus.h"
 
 t_point	correct_point_offset(t_point *point, t_map *map)
 {

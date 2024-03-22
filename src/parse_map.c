@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:13:44 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/21 11:01:35 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/22 14:53:35 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 void	count_rows(int fd, t_map *map, char **argv)
 {
@@ -89,8 +89,6 @@ static void	addrow(t_map *map, char **rowarr, int j)
 		map->points[j][i].z = ft_atoi(split[0]) * map->z_factor;
 		if (map->points[j][i].z > map->highest_z)
 			map->highest_z = map->points[j][i].z;
-		if (map->points[j][i].z != 0)
-			set_colours(&map->points[j][i]);
 		map->points[j][i].x = i * map->size_factor;
 		map->points[j][i].y = j * map->size_factor;
 		if (split[1] != 0)
