@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/22 11:16:45 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/28 08:12:45 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,24 @@ static void	my_translate_keyhook(t_map *map)
 	if (map->camera_dir == true)
 	{
 		if (mlx_is_key_down(map->m, MLX_KEY_UP))
-			map->origoy += 20;
+			map->origoy += 10;
 		if (mlx_is_key_down(map->m, MLX_KEY_DOWN))
-			map->origoy -= 20;
+			map->origoy -= 10;
 		if (mlx_is_key_down(map->m, MLX_KEY_RIGHT))
-			map->origox -= 20;
+			map->origox -= 10;
 		if (mlx_is_key_down(map->m, MLX_KEY_LEFT))
-			map->origox += 20;
+			map->origox += 10;
 	}
 	else if (map->camera_dir == false)
 	{
 		if (mlx_is_key_down(map->m, MLX_KEY_UP))
-			map->origoy -= 20;
+			map->origoy -= 10;
 		if (mlx_is_key_down(map->m, MLX_KEY_DOWN))
-			map->origoy += 20;
+			map->origoy += 10;
 		if (mlx_is_key_down(map->m, MLX_KEY_RIGHT))
-			map->origox += 20;
+			map->origox += 10;
 		if (mlx_is_key_down(map->m, MLX_KEY_LEFT))
-			map->origox -= 20;
+			map->origox -= 10;
 	}
 	mlx_scroll_hook(map->m, my_scrollhook, map);
 	draw_map(map);

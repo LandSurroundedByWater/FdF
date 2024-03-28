@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/22 14:55:44 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/28 09:56:09 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ void	make_iso(t_map *map)
 
 static void	init_z_factor(t_map *map)
 {
-	if (map->highest_z > 140)
-		map->z_factor = 0.1;
-	else if (map->highest_z > 100)
-		map->z_factor = 0.8;
+	if (map->highest_z > 160)
+		map->z_factor = 0.4;
 }
 
 static void	init_map(int fd, t_map *map, char **argv)

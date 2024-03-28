@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/22 13:44:52 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/03/28 09:56:59 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 static void	init_z_factor(t_map *map)
 {
 	if (map->highest_z > 140)
-		map->z_factor = 0.1;
-	else if (map->highest_z > 100)
-		map->z_factor = 0.8;
+		map->z_factor = 0.3;
 }
 
 static void	init_map(int fd, t_map *map, char **argv)
@@ -28,7 +26,7 @@ static void	init_map(int fd, t_map *map, char **argv)
 	map->projection.alpha = 0.45;
 	map->projection.beta = -0.35264;
 	map->projection.gamma = 0.45;
-	map->z_factor = 3;
+	map->z_factor = 5;
 	map->col_theme = 1;
 	count_rows(fd, map, argv);
 	count_columns(fd, map, argv);

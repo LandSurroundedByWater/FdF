@@ -39,7 +39,7 @@ BOBJS	= $(BSRCS:%.c=$(BOBJ_DIR)/%.o)
 OBJ_DIR			= obj
 BOBJ_DIR		= bobj
 
-all: $(NAME)
+all:	$(NAME)
 
 bonus: $(BONUS)
 
@@ -50,11 +50,11 @@ $(BOBJ_DIR):
 	@mkdir -p $(BOBJ_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)%.c
-	@$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) -c $< -o $@
 	@echo "\033[0;36mObject $@ [\033[0;32mOK\033[0;36m]\033[0m"
 
 $(BOBJ_DIR)/%.o: $(BONUS_DIR)%.c
-	@$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) -c $< -o $@
 	@echo "\033[0;36mBonus Object $@ [\033[0;32mOK\033[0;36m]\033[0m"
 
 $(MLX_TARGET):
@@ -79,7 +79,7 @@ $(NAME):	$(OBJ_DIR) $(OBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
 			@echo "\033[1;32mMLX42 library ready!\n\033[0m"
 			@echo "\033[1;32mFdF Bonus objects compiled!\n\033[0m"
 
-bonus:		$(OBJ_DIR) .bonus
+bonus:		$(BOBJ_DIR) .bonus
 
 clean:
 			@$(RM) $(OBJ_DIR) $(BOBJ_DIR) .bonus
