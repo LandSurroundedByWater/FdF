@@ -6,5 +6,13 @@ programs.
 How to install;
 
 clone repository to your macintosh (I haven't tried this on pc)
-go to directory and type make
-if it errors try to comment out HBFLAGS line in makefile by putting '#' in front of it
+go to directory and type make bonus (or make for light version)
+if it errors try to comment out HBFLAGS line in Makefile by typing # in front of it
+
+type ./fdf test_maps/42.fdf  (there is also a lot of other maps in test_maps directory)
+
+active keys 
+rotate  W, A, S, D, Q, E
+change view  P
+
+
