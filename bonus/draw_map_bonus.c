@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/22 14:52:30 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/09/24 11:58:07 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,31 @@ static void	draw_lines(t_map *map, mlx_image_t *newimage)
 	}
 }
 
-void	draw_map(t_map *map)
-{
-	mlx_image_t	*newimage;
-	mlx_image_t	*temp;
+void draw_map(t_map *map) {
+    mlx_image_t *newimage;
+    //mlx_image_t *temp;
 
-	if (map->origoy >= HEIGHT - (HEIGHT / 6) || map->origoy <= 0 + (HEIGHT / 6) \
-	|| map->origox >= WIDTH - (WIDTH / 8) || map->origox <= 0 + (WIDTH / 8))
-		map->change = 0;
-	newimage = mlx_new_image(map->m, WIDTH, HEIGHT);
-	if (!map->image)
-		ft_free_map_and_error(map, ERR_MLX);
-	if (mlx_image_to_window(map->m, newimage, 0, 0) == -1)
-		ft_free_map_and_error(map, ERR_MLX);
-	draw_background(newimage, COL_BG);
-	draw_lines(map, newimage);
-	temp = map->image;
-	map->image = newimage;
-	mlx_delete_image(map->m, temp);
+    if (map->origoy >= HEIGHT - (HEIGHT / 6) || map->origoy <= 0 + (HEIGHT / 6) ||
+        map->origox >= WIDTH - (WIDTH / 8) || map->origox <= 0 + (WIDTH / 8)) {
+        map->change = 0;
+    }
+
+    newimage = mlx_new_image(map->m, WIDTH, HEIGHT);
+    if (!newimage) {
+        ft_free_map_and_error(map, ERR_MLX);
+    }
+
+    if (map->image) {
+        mlx_delete_image(map->m, map->image);
+    }
+
+    if (mlx_image_to_window(map->m, newimage, 0, 0) == -1) {
+        ft_free_map_and_error(map, ERR_MLX);
+    }
+
+    draw_background(newimage, COL_BG);
+    draw_lines(map, newimage);
+
+    map->image = newimage;
 }
+

@@ -1,3 +1,7 @@
+
+
+
+
 NAME = fdf
 
 CC = cc
@@ -8,8 +12,8 @@ MLX_BUILD_DIR = $(MLX_DIR)/build
 MLX_TARGET = $(MLX_BUILD_DIR)/libmlx42.a
 CFLAGS = -Wall -Wextra -Werror
 MLXFLAGS = -Iinclude -lglfw
-HBFLAGS = -L"/Users/tsaari/.brew/opt/glfw/lib/"
-FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
+GLFW_DIR = -L"/usr/lib/x86_64-linux-gnu"
+FRAMEWORKS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
 LIBFT =	libft/libft.a
 SRC_DIR = src/
 BONUS_DIR = bonus/
@@ -67,13 +71,13 @@ $(LIBFT):
 			@make -C "libft"
 
 $(NAME):	$(OBJ_DIR) $(OBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
-			@$(CC) $(OBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(HBFLAGS) $(FRAMEWORKS) -o $(NAME)
+			@$(CC) $(OBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(FRAMEWORKS) -o $(NAME)
 			@echo "\033[1;32mLibft library ready!\n\033[0m"
 			@echo "\033[1;32mMLX42 library ready!\n\033[0m"
 			@echo "\033[1;32mFdF compile success!\n\033[0m"
 
 .bonus:		$(BOBJ_DIR) $(BOBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
-			@$(CC) $(BOBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(HBFLAGS) $(FRAMEWORKS) -o $(NAME)
+			@$(CC) $(BOBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(FRAMEWORKS) -o $(NAME)
 			@touch .bonus
 			@echo "\033[1;32mLibft library ready!\n\033[0m"
 			@echo "\033[1;32mMLX42 library ready!\n\033[0m"

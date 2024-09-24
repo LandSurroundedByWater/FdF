@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:50:52 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/22 14:40:53 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/09/24 10:51:22 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	fill_map(int fd, t_map *map, char **argv);
 void	draw_map(t_map *map);
 void	set_offset(t_map *map);
 int		pixel_ok(int x, int y);
-int32_t	get_col(t_point *start, t_point *end, t_map *map);
+int32_t	get_col(t_point *start, t_point *end);
 void	bresenham_line(mlx_image_t *image, t_point s, t_point e, int32_t col);
 
 //rotate and center

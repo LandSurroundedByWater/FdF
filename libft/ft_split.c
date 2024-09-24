@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:51:06 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/21 09:24:43 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/09/24 11:30:02 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	**free_array(char **s)
 	i = 0;
 	if (!s)
 		return (0);
-	while (s[i] != '\0')
+	while (s[i] != NULL)
 	{
 		free (s[i]);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:13:17 by tsaari            #+#    #+#             */
-/*   Updated: 2024/03/22 14:53:22 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/09/24 10:51:01 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	set_offset(t_map *map)
 	map->offset_x = map->origox - ((first.x + last.x) / 2);
 }
 
-int32_t	get_col(t_point *start, t_point *end, t_map *map)
+int32_t	get_col(t_point *start, t_point *end)
 {
 	if (end->z >= start->z)
 		return (end->col);
