@@ -18,7 +18,7 @@ programs.
 
 How to install;
 
-clone repository to your macintosh (I haven't tried this on pc)
+clone repository to your mac (I haven't tried this on windows or linux)
 go to directory and type make bonus (or make for light version)
 if it errors try to comment out HBFLAGS line in Makefile by typing # in front of it
 
